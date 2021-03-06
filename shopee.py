@@ -1,6 +1,6 @@
-import pandas
+import pandas as pd
 import time
-df = pandas.read_json("contacts.json")
+df = pd.read_json("contacts.json")
 
 class User:
 
@@ -77,3 +77,38 @@ for index,row in df.iterrows():
 
 
 print(time.time() - s)
+
+# Combine all 3 dictionaries into one set
+user_set = set()
+
+for key, value in email_dict.items():
+    user_set.add(value)
+
+for key, value in id_dict.items():
+    user_set.add(value)
+
+for key, value in phone_dict.items():
+    user_set.add(value)
+
+# Parse set into final output
+output = []
+for value in user_set:
+    sorted_tickets = list(value.all_idx)
+    sorted_tickets.sort()
+    tickets_as_strings = [str(i) for i in sorted_tickets]
+
+    ticket_trace = "-".join(tickets_as_strings)
+    contact = value.total_contacts
+    right_column = ticket_trace + ", " + str(contact)
+
+    for item in tickets_as_strings:
+        output.append([item, right_column])
+
+df = pd.DataFrame(output, columns=["ticket_id", "ticket_trace/contact"])
+df[["ticket_id"]] = df[["ticket_id"]].apply(pd.to_numeric)
+df = df.sort_values(by="ticket_id")
+
+print(df.info())
+print(df.head(20))
+
+df.to_csv("test.csv", index=None)
