@@ -24,14 +24,19 @@ phone_dict = {}
 def merge(user, index, email, phone, order_id, contacts):
     user.all_idx.add(index)
 
+    user.total_contacts += contacts
+
     if email != "":
         user.email = email
+        email_dict[email] = user
     
     if phone != "":
         user.phone = phone
+        phone_dict[phone] = user
 
     if order_id != "":
         user.order_id = order_id
+        id_dict[order_id] = user
 
 def create_new_user(index, email, phone, order_id, contacts):
     new_user = User(index, email, phone, order_id, contacts)
@@ -72,4 +77,5 @@ for index,row in df.iterrows():
         create_new_user(index, email, phone, order_id, contacts)
 
 
+print(len(email_dict), len(id_dict), len(phone_dict))
 print(time.time() - s)
