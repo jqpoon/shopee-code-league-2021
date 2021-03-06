@@ -2,18 +2,17 @@ import pandas
 import time
 df = pandas.read_json("contacts.json")
 
-
 class User:
 
     def __init__(self, idx, email, phone, order_id, contacts):
         self.all_idx = {idx}
         self.email = email
         self.phone = phone
-        self.order_id = order_id
         self.total_contacts = contacts
+        self.order_id = order_id
 
     def __repr__(self):
-        return f"{self.email}, {self.id}, {self.phone}, {self.total_contacts}"
+        return f"{self.all_idx}, {self.email}, {self.phone}, {self.order_id}, {self.total_contacts}"
 
 
 email_dict = {}
@@ -77,5 +76,4 @@ for index,row in df.iterrows():
         create_new_user(index, email, phone, order_id, contacts)
 
 
-print(len(email_dict), len(id_dict), len(phone_dict))
 print(time.time() - s)
