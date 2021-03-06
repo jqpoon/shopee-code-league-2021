@@ -64,11 +64,11 @@ for index,row in df.iterrows():
         merge(email_dict[email], index, email, phone, order_id, contacts)
         user_exists = True
     
-    if order_id != "" and order_id in id_dict:
+    elif order_id != "" and order_id in id_dict:
         merge(id_dict[order_id], index, email, phone, order_id, contacts)
         user_exists = True
 
-    if phone != "" and phone in phone_dict:
+    elif phone != "" and phone in phone_dict:
         merge(phone_dict[phone], index, email, phone, order_id, contacts)
         user_exists = True
 
