@@ -6,8 +6,8 @@ df = pandas.read_json("contacts.json")
 class User:
 
     def __init__(self, idx, email, phone, order_id, contacts):
+        self.all_idx = {idx}
         self.email = email
-        self.idx = idx
         self.phone = phone
         self.order_id = order_id
         self.total_contacts = contacts
@@ -22,7 +22,16 @@ phone_dict = {}
 
 
 def merge(user, index, email, phone, order_id, contacts):
-    pass
+    user.all_idx.add(index)
+
+    if email != "":
+        user.email = email
+    
+    if phone != "":
+        user.phone = phone
+
+    if order_id != "":
+        user.order_id = order_id
 
 def create_new_user(index, email, phone, order_id, contacts):
     new_user = User(index, email, phone, order_id, contacts)
